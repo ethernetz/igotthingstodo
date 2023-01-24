@@ -24,7 +24,7 @@ services:
     build:
       context: ./firebase
     ports:
-      - 4000:4000
+      - 4000:4000 # Used for emulator UI
       - 8080:8080 # Used for firestore emulator
       - 9099:9099 # Used for auth emulator
       - 5001:5001 # Used for functions emulator
