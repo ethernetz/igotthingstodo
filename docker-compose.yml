@@ -1,8 +1,10 @@
 
 version: "3.8"
+name: igotthingstodo
 services:
   app:
     image: app
+    container_name: app
     build:
       context: ./app
     volumes:
@@ -15,4 +17,24 @@ services:
         sh,
         -c,
         "cp -r /home/node/cache/. /home/node/app/. && npm run dev -- --host"
+      ]
+  firebase:
+    image: firebase
+    container_name: firebase
+    build:
+      context: ./firebase
+    ports:
+      - 4000:4000
+      - 8080:8080 # Used for firestore emulator
+      - 9099:9099 # Used for auth emulator
+      - 5001:5001 # Used for functions emulator
+      - 9005:9005 # Used for `firebase login` authentication 
+    volumes:
+      - ./firebase:/home/node/app
+    command:
+      # Copy node_modules into volume-mounted directory so we can see them in dev environment
+      [
+        sh,
+        -c,
+        "cp -r /home/node/functions-cache/. /home/node/app/functions/. && firebase --project=sveltekit-firebase-1e60f emulators:start --only auth,firestore,functions --import=./firebase-export --export-on-exit & npm run build:watch --prefix ./functions "
       ]
