@@ -1,0 +1,18 @@
+
+version: "3.8"
+services:
+  app:
+    image: app
+    build:
+      context: ./app
+    volumes:
+      - ./app:/home/node/app # Drop all our code from ./app into container's usr/src/app directory 
+    ports:
+      - "5173:5173"
+    command:
+      # Copy node_modules into volume-mounted directory so we can see them in dev environment
+      [
+        sh,
+        -c,
+        "cp -r /home/node/cache/. /home/node/app/. && npm run dev -- --host"
+      ]
