@@ -3,6 +3,8 @@
 	let todoInput = '';
 </script>
 
+<h1>igotthingstodo</h1>
+
 {#if $user}
 	<button on:click={() => auth.signOut()}>Sign out</button>
 {:else}
