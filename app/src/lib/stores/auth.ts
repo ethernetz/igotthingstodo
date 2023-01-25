@@ -3,6 +3,12 @@ import type { FirebaseApp } from 'firebase/app';
 import { dev } from '$app/environment';
 import { derived, type Readable } from 'svelte/store';
 import { app, ensureStoreValue } from '$lib/stores';
+
+export enum AuthProviderType {
+	Google = 'google',
+	Apple = 'apple'
+}
+
 const createAuth = () => {
 	let authCache: Auth;
 
@@ -24,20 +30,23 @@ const createAuth = () => {
 		init();
 	});
 
-	async function providerFor(name: string) {
-		const { GoogleAuthProvider } = await import('firebase/auth');
-		switch (name) {
-			case 'google':
+	async function providerFor(providerType: AuthProviderType) {
+		switch (providerType) {
+			case AuthProviderType.Google: {
+				const { GoogleAuthProvider } = await import('firebase/auth');
 				return new GoogleAuthProvider();
-			default:
-				throw 'unknown provider ' + name;
+			}
+			case AuthProviderType.Apple: {
+				const { OAuthProvider } = await import('firebase/auth');
+				return new OAuthProvider('apple.com');
+			}
 		}
 	}
 
-	async function signInWith(name: string) {
+	async function signInWith(providerType: AuthProviderType) {
 		const $auth = await ensureStoreValue(auth);
 		const { signInWithRedirect } = await import('firebase/auth');
-		const provider = await providerFor(name);
+		const provider = await providerFor(providerType);
 		await signInWithRedirect($auth, provider);
 	}
 

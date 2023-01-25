@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { auth, user, userData, todos } from '$lib/stores';
+	import { auth, user, userData, todos, AuthProviderType } from '$lib/stores';
 	let todoInput = '';
 </script>
 
@@ -9,7 +9,8 @@
 	<button on:click={() => auth.signOut()}>Sign out</button>
 {:else}
 	<div>
-		<button on:click={() => auth.signInWith('google')}>Sign in with google</button>
+		<button on:click={() => auth.signInWith(AuthProviderType.Google)}>Sign in with google</button>
+		<button on:click={() => auth.signInWith(AuthProviderType.Apple)}>Sign in with apple</button>
 	</div>
 {/if}
 
