@@ -45,9 +45,9 @@ const createAuth = () => {
 
 	async function signInWith(providerType: AuthProviderType) {
 		const $auth = await ensureStoreValue(auth);
-		const { signInWithRedirect } = await import('firebase/auth');
+		const { signInWithPopup } = await import('firebase/auth');
 		const provider = await providerFor(providerType);
-		await signInWithRedirect($auth, provider);
+		await signInWithPopup($auth, provider);
 	}
 
 	async function signOut() {
