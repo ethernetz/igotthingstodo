@@ -36,5 +36,5 @@ services:
       [
         sh,
         -c,
-        "cp -r /home/node/functions-cache/. /home/node/app/functions/. && firebase --project=sveltekit-firebase-1e60f emulators:start --only auth,firestore,functions --import=./emulator-cache --export-on-exit & npm run build:watch --prefix ./functions "
+        "cp -r /home/node/functions-cache/. /home/node/app/functions/. && firebase --project=igotthingstodo-f37db emulators:start --only auth,firestore,functions --import=./emulator-cache --export-on-exit & npm run build:watch --prefix ./functions "
       ]
