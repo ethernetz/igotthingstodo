@@ -15,18 +15,18 @@ const options: FirebaseOptions = {
 /** Only initalize the app on-demand so no firebase JS will be used until needed 🔥
  *  Other stores like auth & user will derive from this */
 function createApp() {
-	let app: FirebaseApp;
+	let appCache: FirebaseApp;
 
 	const { subscribe } = readable<FirebaseApp>(undefined, (set) => {
-		async function init() {
-			/** Only use firebase sdk on client */
-			if (!browser) return;
-			/** App is already created, no reason to initialize */
-			if (app) return;
+		/** Only use firebase sdk on client */
+		if (!browser) return;
+		/** App is already created, no reason to initialize */
+		if (appCache) return;
 
+		async function init() {
 			const { initializeApp } = await import('firebase/app');
-			app = initializeApp(options);
-			set(app);
+			appCache = initializeApp(options);
+			set(appCache);
 		}
 
 		init();
