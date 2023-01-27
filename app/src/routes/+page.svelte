@@ -45,10 +45,9 @@
 					<li
 						on:click={() => todos.completeTodo(todo.id)}
 						on:keydown={() => todos.completeTodo(todo.id)}
-						class="text-white font-rubik text-2xl  break-all flex	
-						before:{todo.complete ? 'content-checkbox_checked' : 'content-checkbox_unchecked'} 
-						before:mr-2 hover:before:content-checkbox_checked before:mt-1
-						cursor-pointer"
+						class="text-white font-rubik text-2xl  break-all flex hover:before:content-checkbox_checked
+						{todo.complete ? 'before:content-checkbox_checked' : 'before:content-checkbox_unchecked'}
+						before:mr-2  before:mt-1 cursor-pointer"
 					>
 						{todo.description}
 					</li>
