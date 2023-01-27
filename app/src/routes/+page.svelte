@@ -1,21 +1,22 @@
 <script lang="ts">
 	import { auth, user, userData, todos, signInModal } from '$lib/stores';
 	import SignInModal from '$lib/components/SignInModal.svelte';
+	import FireIcon from '$lib/components/FireIcon.svelte';
+
 	let todoInput = '';
 </script>
 
-<nav class="flex justify-between px-16 pt-8">
-	<div>
-		<h1
-			class="text-white text-xl font-barlow font-bold mb-6 after:content-fire after:align-[-25%] after:ml-1"
-		>
-			i got things todo
-		</h1>
+<nav class="flex justify-between px-16 pt-8 mb-8 items-center">
+	<div class="flex justify-center items-center">
+		<h1 class="text-white text-xl font-barlow font-bold mr-1">i got things todo</h1>
+		<FireIcon />
 	</div>
 	{#if $user}
-		<button class="text-white font-barlow" on:click={() => auth.signOut()}>Logout</button>
+		<button class="text-white text-xl font-barlow opacity-60" on:click={() => auth.signOut()}
+			>Logout</button
+		>
 	{:else}
-		<button class="text-white font-barlow" on:click={signInModal.show}>Login</button>
+		<button class="text-white text-xl font-barlow" on:click={signInModal.show}>Login</button>
 	{/if}
 </nav>
 

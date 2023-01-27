@@ -13,9 +13,8 @@ module.exports = {
 				'gradient-radial-at-bottom': 'radial-gradient(ellipse at bottom, var(--tw-gradient-stops))'
 			},
 			content: {
-				fire: 'url("src/lib/assets/fire.svg")',
-				checkbox_checked: 'url("src/lib/assets/checkbox_checked.svg")',
-				checkbox_unchecked: 'url("src/lib/assets/checkbox_unchecked.svg")'
+				checkbox_checked: 'url("/checkbox_checked.svg")',
+				checkbox_unchecked: 'url("/checkbox_unchecked.svg")'
 			}
 		},
 		...colors
