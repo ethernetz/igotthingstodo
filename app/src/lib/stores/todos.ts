@@ -63,14 +63,14 @@ function createUserData() {
 			const todosRef = await firestore.userTodos($firestore, $userData.uid);
 			await addDoc(todosRef, { description, timestamp: serverTimestamp(), complete: false });
 		},
-		completeTodo: async (todoid: string) => {
+		toggleTodo: async (todo: Todo) => {
 			const $firestore = await ensureStoreValue(firestore);
 			const $userData = await ensureStoreValue(userData);
 			if (!$userData) return;
 
 			const { updateDoc } = await import('firebase/firestore');
-			const todoRef = await firestore.userTodo($firestore, $userData.uid, todoid);
-			await updateDoc(todoRef, { complete: true });
+			const todoRef = await firestore.userTodo($firestore, $userData.uid, todo.id);
+			await updateDoc(todoRef, { complete: !todo.complete });
 		},
 		deleteTodo: async (todoid: string) => {
 			const $firestore = await ensureStoreValue(firestore);

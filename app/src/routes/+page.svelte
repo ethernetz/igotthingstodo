@@ -43,10 +43,11 @@
 			<ul class="w-3/4 max-w-lg self-center m-auto mt-6">
 				{#each $todos as todo}
 					<li
-						on:click={() => todos.completeTodo(todo.id)}
-						on:keydown={() => todos.completeTodo(todo.id)}
+						on:click={() => todos.toggleTodo(todo)}
+						on:keydown={() => todos.toggleTodo(todo)}
 						class="text-white font-rubik text-2xl  break-all flex hover:before:content-checkbox_checked
 						{todo.complete ? 'before:content-checkbox_checked' : 'before:content-checkbox_unchecked'}
+						{todo.complete && 'opacity-20'}
 						before:mr-2  before:mt-1 cursor-pointer"
 					>
 						{todo.description}
