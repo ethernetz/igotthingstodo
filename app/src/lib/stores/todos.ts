@@ -6,6 +6,7 @@ import type { Firestore, Timestamp } from 'firebase/firestore';
 export interface FirestoreTodo {
 	description: string;
 	timestamp: Timestamp;
+	complete: boolean;
 }
 
 export interface Todo extends FirestoreTodo {
@@ -60,7 +61,16 @@ function createUserData() {
 
 			const { addDoc, serverTimestamp } = await import('firebase/firestore');
 			const todosRef = await firestore.userTodos($firestore, $userData.uid);
-			await addDoc(todosRef, { description, timestamp: serverTimestamp() });
+			await addDoc(todosRef, { description, timestamp: serverTimestamp(), complete: false });
+		},
+		completeTodo: async (todoid: string) => {
+			const $firestore = await ensureStoreValue(firestore);
+			const $userData = await ensureStoreValue(userData);
+			if (!$userData) return;
+
+			const { updateDoc } = await import('firebase/firestore');
+			const todoRef = await firestore.userTodo($firestore, $userData.uid, todoid);
+			await updateDoc(todoRef, { complete: true });
 		},
 		deleteTodo: async (todoid: string) => {
 			const $firestore = await ensureStoreValue(firestore);

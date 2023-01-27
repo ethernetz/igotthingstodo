@@ -1,55 +1,60 @@
 <script lang="ts">
-	import { auth, user, userData, todos, AuthProviderType } from '$lib/stores';
+	import { auth, user, userData, todos, signInModal } from '$lib/stores';
+	import SignInModal from '$lib/components/SignInModal.svelte';
 	let todoInput = '';
 </script>
 
-<h1>igotthingstodo</h1>
-
-<h1 class="text-3xl font-bold underline">Hello world!</h1>
-
-{#if $user}
-	<button on:click={() => auth.signOut()}>Sign out</button>
-{:else}
+<nav class="flex justify-between px-16 pt-8">
 	<div>
-		<button on:click={() => auth.signInWith(AuthProviderType.Google)}>Sign in with google</button>
-		<button on:click={() => auth.signInWith(AuthProviderType.Apple)}>Sign in with apple</button>
+		<h1
+			class="text-white text-xl font-barlow font-bold mb-6 after:content-fire after:align-[-25%] after:ml-1"
+		>
+			i got things todo
+		</h1>
 	</div>
-{/if}
+	{#if $user}
+		<button class="text-white font-barlow" on:click={() => auth.signOut()}>Logout</button>
+	{:else}
+		<button class="text-white font-barlow" on:click={signInModal.show}>Login</button>
+	{/if}
+</nav>
 
 {#if $user}
-	<div>I am signed in!</div>
-	<div>Name: {$user?.displayName}</div>
-
 	{#if $userData}
 		<form
 			on:submit|preventDefault={() => {
 				todos.addTodo(todoInput);
 				todoInput = '';
 			}}
+			class="text-center"
 		>
-			<label>
-				<input
-					name="description"
-					bind:value={todoInput}
-					type="text"
-					placeholder="new todo item.."
-					required
-				/>
-			</label>
+			<input
+				name="add a todo"
+				bind:value={todoInput}
+				type="text"
+				placeholder="today i want to..."
+				required
+				class="w-3/4 max-w-lg mwd bg-transparent border-b-2 outline-0 border-orange-500 focus:border-opacity-40 text-white font-rubik text-2xl caret-orange-500"
+			/>
 		</form>
 
 		{#if $todos}
-			<ul>
+			<ul class="w-3/4 max-w-lg self-center m-auto mt-6">
 				{#each $todos as todo}
-					<li class="todo">
-						<form on:submit|preventDefault={() => todos.deleteTodo(todo.id)}>
-							<input type="hidden" name="id" value={todo.id} />
-							<button aria-label="Mark as complete">✔</button>
-							{todo.description}
-						</form>
+					<li
+						on:click={() => todos.completeTodo(todo.id)}
+						on:keydown={() => todos.completeTodo(todo.id)}
+						class="text-white font-rubik text-2xl  break-all flex	
+						before:{todo.complete ? 'content-checkbox_checked' : 'content-checkbox_unchecked'} 
+						before:mr-2 hover:before:content-checkbox_checked before:mt-1
+						cursor-pointer"
+					>
+						{todo.description}
 					</li>
 				{/each}
 			</ul>
 		{/if}
 	{/if}
 {/if}
+
+<SignInModal />
