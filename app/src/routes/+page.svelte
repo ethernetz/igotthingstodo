@@ -49,7 +49,7 @@
 							on:click={() => todos.toggleTodo(todo)}
 							on:keydown={() => todos.toggleTodo(todo)}
 							animate:flip={{ duration: 200 }}
-							class="font-rubik hover:before:content-checkbox_checked flex cursor-pointer break-all text-2xl text-white before:mr-2 before:mt-1
+							class="font-rubik hoverable:hover:before:content-checkbox_checked flex cursor-pointer break-all text-2xl text-white before:mr-2 before:mt-1
 								{todo.complete ? 'before:content-checkbox_checked' : 'before:content-checkbox_unchecked'} 
 								{todo.complete && 'opacity-20'}"
 						>

@@ -15,6 +15,9 @@ module.exports = {
 			content: {
 				checkbox_checked: 'url("/checkbox_checked.svg")',
 				checkbox_unchecked: 'url("/checkbox_unchecked.svg")'
+			},
+			screens: {
+				hoverable: { raw: '(hover: hover)' }
 			}
 		},
 		...colors
