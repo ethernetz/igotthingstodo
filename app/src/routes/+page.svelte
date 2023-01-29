@@ -60,7 +60,7 @@
 
 				<button
 					on:click={() => todos.deleteTodos($completedTodos)}
-					class="class font-rubik mt-5 mb-10 h-10	w-fit self-center rounded-md border-2 border-white px-8 text-lg text-white opacity-20
+					class="class font-rubik mt-5 mb-10 h-10	w-fit self-center rounded-md border-2 border-white px-8 text-lg text-white opacity-60 hover:opacity-100
 					{$completedTodos.length === 0 && 'invisible'}"
 				>
 					clear completed todos
