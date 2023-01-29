@@ -6,19 +6,19 @@
 	let todoInput = '';
 </script>
 
-<div class="flex flex-col h-full">
-	<nav class="flex justify-between px-16 pt-8 mb-8 items-center">
-		<div class="flex justify-center items-center">
-			<h1 class="text-white text-xl font-barlow font-bold mr-1">i got things todo</h1>
+<div class="flex h-full flex-col">
+	<nav class="mb-8 flex items-center justify-between px-16 pt-8">
+		<div class="flex items-center justify-center">
+			<h1 class="font-barlow mr-1 text-xl font-bold text-white">i got things todo</h1>
 			<FireIcon />
 		</div>
 		{#if $user}
 			<button
-				class="text-white text-xl font-barlow opacity-20 hover:opacity-100"
+				class="font-barlow text-xl text-white opacity-20 hover:opacity-100"
 				on:click={() => auth.signOut()}>Logout</button
 			>
 		{:else}
-			<button class="text-white text-xl font-barlow" on:click={signInModal.show}>Login</button>
+			<button class="font-barlow text-xl text-white" on:click={signInModal.show}>Login</button>
 		{/if}
 	</nav>
 
@@ -37,20 +37,19 @@
 					type="text"
 					placeholder="today i want to..."
 					required
-					class="w-3/4 max-w-lg mwd bg-transparent border-b-2 outline-0 border-orange-500 focus:border-opacity-40 text-white font-rubik text-2xl caret-orange-500"
+					class="mwd font-rubik w-3/4 max-w-lg border-b-2 border-orange-500 bg-transparent text-2xl text-white caret-orange-500 outline-0 focus:border-opacity-40"
 				/>
 			</form>
 
 			{#if $todos}
-				<ul class="w-3/4 max-w-lg self-center m-auto mt-6 overflow-auto">
+				<ul class="m-auto mt-6 w-3/4 max-w-lg self-center overflow-auto">
 					{#each $todos as todo}
 						<li
 							on:click={() => todos.toggleTodo(todo)}
 							on:keydown={() => todos.toggleTodo(todo)}
-							class="text-white font-rubik text-2xl  break-all flex hover:before:content-checkbox_checked
-							{todo.complete ? 'before:content-checkbox_checked' : 'before:content-checkbox_unchecked'}
-							{todo.complete && 'opacity-20'}
-							before:mr-2  before:mt-1 cursor-pointer"
+							class="font-rubik hover:before:content-checkbox_checked flex  cursor-pointer break-all text-2xl	text-white  before:mr-2 before:mt-1 
+								{todo.complete ? 'before:content-checkbox_checked' : 'before:content-checkbox_unchecked'} 
+								{todo.complete && 'opacity-20'}"
 						>
 							{todo.description}
 						</li>
@@ -59,8 +58,7 @@
 
 				<button
 					on:click={() => todos.deleteTodos($completedTodos)}
-					class="h-10 w-fit rounded-md self-center class
-					text-white font-rubik text-lg border-white opacity-20 border-2 px-8 mt-5 mb-10
+					class="class font-rubik mt-5 mb-10 h-10	w-fit self-center rounded-md border-2 border-white px-8 text-lg text-white opacity-20
 					{$completedTodos.length === 0 && 'invisible'}"
 				>
 					clear completed todos
