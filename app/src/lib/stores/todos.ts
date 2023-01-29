@@ -72,16 +72,29 @@ function createUserData() {
 			const todoRef = await firestore.userTodo($firestore, $userData.uid, todo.id);
 			await updateDoc(todoRef, { complete: !todo.complete });
 		},
-		deleteTodo: async (todoid: string) => {
+		deleteTodos: async (todos: Todo[]) => {
 			const $firestore = await ensureStoreValue(firestore);
 			const $userData = await ensureStoreValue(userData);
 			if (!$userData) return;
 
-			const { deleteDoc } = await import('firebase/firestore');
-			const todoRef = await firestore.userTodo($firestore, $userData.uid, todoid);
-			await deleteDoc(todoRef);
+			const { writeBatch } = await import('firebase/firestore');
+			const batch = writeBatch($firestore);
+			for (const todo of todos) {
+				const todoRef = await firestore.userTodo($firestore, $userData.uid, todo.id);
+				batch.delete(todoRef);
+			}
+
+			await batch.commit();
 		}
 	};
 }
 
 export const todos = createUserData();
+
+export const completedTodos = derived<Readable<Todo[] | null>, Todo[]>(todos, (todos, set) => {
+	if (!todos) {
+		set([]);
+		return;
+	}
+	set(todos.filter((todo) => todo.complete));
+});
