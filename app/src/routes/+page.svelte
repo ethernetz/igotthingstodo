@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { auth, user, userData, todos, signInModal, completedTodos } from '$lib/stores';
+	import { flip } from 'svelte/animate';
 	import SignInModal from '$lib/components/SignInModal.svelte';
 	import FireIcon from '$lib/components/FireIcon.svelte';
 
@@ -42,12 +43,13 @@
 			</form>
 
 			{#if $todos}
-				<ul class="m-auto mt-6 w-3/4 max-w-lg self-center overflow-auto">
-					{#each $todos as todo}
+				<ul class="m-auto mt-6 h-full w-3/4 max-w-lg self-center overflow-auto">
+					{#each $todos as todo (todo.id)}
 						<li
 							on:click={() => todos.toggleTodo(todo)}
 							on:keydown={() => todos.toggleTodo(todo)}
-							class="font-rubik hover:before:content-checkbox_checked flex  cursor-pointer break-all text-2xl	text-white  before:mr-2 before:mt-1 
+							animate:flip={{ duration: 200 }}
+							class="font-rubik hover:before:content-checkbox_checked flex cursor-pointer break-all text-2xl text-white before:mr-2 before:mt-1
 								{todo.complete ? 'before:content-checkbox_checked' : 'before:content-checkbox_unchecked'} 
 								{todo.complete && 'opacity-20'}"
 						>
