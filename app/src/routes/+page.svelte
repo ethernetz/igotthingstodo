@@ -7,7 +7,7 @@
 	let todoInput = '';
 </script>
 
-<div class="flex h-full flex-col">
+<div class="flex h-screen flex-col">
 	<nav class="mb-8 flex items-center justify-between px-16 pt-8">
 		<div class="flex items-center justify-center">
 			<h1 class="font-barlow mr-1 text-xl font-bold text-white">i got things todo</h1>
